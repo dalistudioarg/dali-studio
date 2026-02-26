@@ -1,0 +1,176 @@
+---
+
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+>
+  <nav class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a
+      href="/"
+      class="text-lg font-semibold tracking-tight text-white hover:opacity-80 transition"
+    >
+      Dali Studio
+    </a>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex items-center gap-10 text-sm">
+
+      <li>
+        <a
+          href="#servicios"
+          class="nav-link relative text-slate-400 hover:text-white transition"
+        >
+          Servicios
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="#proceso"
+          class="nav-link relative text-slate-400 hover:text-white transition"
+        >
+          Proceso
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="#contacto"
+          class="nav-link relative text-slate-400 hover:text-white transition"
+        >
+          Contacto
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="#contacto"
+          class="bg-linear-to-r from-indigo-500 to-violet-500
+                 hover:from-indigo-600 hover:to-violet-600
+                 text-white px-5 py-2 rounded-xl
+                 transition-all duration-300
+                 shadow-[0_8px_20px_rgba(99,102,241,0.35)]
+                 hover:-translate-y-0.5"
+        >
+          Empezar
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- Mobile Button -->
+    <button
+      id="menu-btn"
+      class="md:hidden text-slate-200 text-2xl focus:outline-none"
+    >
+      ☰
+    </button>
+
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden bg-slate-950/95 backdrop-blur border-t border-slate-800"
+  >
+    <ul class="flex flex-col p-6 gap-6 text-slate-300 text-sm">
+
+      <li><a href="#servicios" class="hover:text-white transition">Servicios</a></li>
+      <li><a href="#proceso" class="hover:text-white transition">Proceso</a></li>
+      <li><a href="#contacto" class="hover:text-white transition">Contacto</a></li>
+
+      <li>
+        <a
+          href="#contacto"
+          class="block text-center bg-linear-to-r from-indigo-500 to-violet-500
+                 text-white px-4 py-3 rounded-xl mt-2"
+        >
+          Empezar
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<script>
+  const navbar = document.getElementById("navbar");
+  const menuBtn = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  // Navbar background + active link
+  window.addEventListener("scroll", () => {
+
+    // Background dinámico
+    if (navbar && window.scrollY > 30) {
+      navbar.classList.add(
+        "bg-slate-950/80",
+        "backdrop-blur-md",
+        "border-b",
+        "border-slate-800"
+      );
+    } else if (navbar) {
+      navbar.classList.remove(
+        "bg-slate-950/80",
+        "backdrop-blur-md",
+        "border-b",
+        "border-slate-800"
+      );
+    }
+
+    // Active section detection
+    let current = "";
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 160;
+      const sectionHeight = section.clientHeight;
+
+      if (
+        window.scrollY >= sectionTop &&
+        window.scrollY < sectionTop + sectionHeight
+      ) {
+        current = section.getAttribute("id") || "";
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.remove("text-white");
+      link.classList.add("text-slate-400");
+
+      if (link.getAttribute("href") === "#" + current) {
+        link.classList.remove("text-slate-400");
+        link.classList.add("text-white");
+      }
+    });
+  });
+
+  // Toggle mobile menu
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (this: HTMLElement, e: Event) {
+      e.preventDefault();
+      const href = this.getAttribute("href");
+      const target = href ? document.querySelector(href) : null;
+
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+
+      if (mobileMenu) {
+        mobileMenu.classList.add("hidden");
+      }
+    });
+  });
+</script>
